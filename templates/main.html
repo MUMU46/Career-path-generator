@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %} 学习道路生成 {% endblock %}
+{% block head  %}
+ <link rel="stylesheet" href="../static/css/main.css">
+{% endblock %}
+
+{% block body %}
+
+<div class="body">
+    <div class="title">学习道路生成器</div>
+    <div class="box">
+        <img class="gif" src="../static/beam-woman-sitting-at-desk-and-programming.gif">
+         <form method="POST" class="search" action="http://127.0.0.1:5000/">
+            <input name="occu" placeholder="输入职业名称">
+            <button class="confirm">SEARCH</button>
+         </form>
+
+    </div>
+</div>
+{% endblock %}

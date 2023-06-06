@@ -1,0 +1,43 @@
+{% extends "base_r.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/nav.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/video.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="navigation">
+        <div class="back" ><a href="{{ url_for('result.main') }}"><img src="{{ url_for('static', filename='back.png') }}"></a></div>
+            <ul >
+                <li><a href="{{url_for ('result.videos', search= search_w ) }}" >视频教程</a></li>
+                <li><a href="{{url_for ('result.charts', show='quality' ,search = search_w) }}">学历要求</a></li>
+                <li><a href="{{url_for ('result.charts', show= 'salary', search = search_w)}}">薪资水平</a></li>
+                <li><a  href="{{url_for ('result.charts', show='area', search = search_w) }}">地区分布</a></li>
+            </ul>
+    </div>
+    <div class="r_title">{{ search_w }}</div>
+    <div class="video_list">
+        {% for item in videos %}
+        <div class="item">
+            <div class="skill_name">🤔{{ item['skill'] }}✨</div>
+            <div class="v_box">
+                {% for v in item['video'] %}
+                <div class="video">
+                    <a title={{ v['title']}} href={{ v['url'] }}><img class="cover" src={{ v['cover'] }}></a>
+                    <div class="v_title">{{v['title']}}</div>
+                </div>
+                {% endfor %}
+{#                 <div class="video">#}
+{#                    <a href="http://www.bilibili.com/video/av522050663"><img class="cover" src="//images.weserv.nl/?url=https://i1.hdslb.com/bfs/archive/3ee6344b9aad858a732b72f6618695dd81608e5c.png"></a>#}
+{#                </div>#}
+{#                 <div class="video">#}
+{#                    <a href="http://www.bilibili.com/video/av522050663"><img class="cover" src="//images.weserv.nl/?url=https://i1.hdslb.com/bfs/archive/3ee6344b9aad858a732b72f6618695dd81608e5c.png"></a>#}
+{#                </div>#}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

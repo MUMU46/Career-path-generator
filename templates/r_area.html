@@ -1,0 +1,160 @@
+{% extends "base_r.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/nav.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/quality.css') }}">
+    <script src="{{ url_for('static', filename='JS/echarts.min.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="navigation">
+        <div class="back" ><a href="{{ url_for('result.main') }}"><img src="{{ url_for('static', filename='back.png') }}"></a></div>
+            <ul >
+                <li><a href="{{url_for ('result.videos', search= search_w ) }}" >视频教程</a></li>
+                <li><a href="{{url_for ('result.charts', show='quality' ,search = search_w) }}">学历要求</a></li>
+                <li><a href="{{url_for ('result.charts', show= 'salary', search = search_w)}}">薪资水平</a></li>
+                <li><a href="{{url_for ('result.charts', show='area', search = search_w) }}">地区分布</a></li>
+            </ul>
+    </div>
+    <div class="r_title">{{ search_w }}</div>
+    <div class="q_charts">
+        <div id="main" style="width: 800px;height:600px;"></div>
+        <div class="max">优势城市<span>{{ max }}</span></div>
+        <script type="text/javascript">
+            var paramDict = JSON.parse('{{ dict | tojson }}');
+            var chartDom = document.getElementById('main');
+            var myChart = echarts.init(chartDom);
+            var option;
+            var data = [
+                {name:'北京市',value: paramDict['北京']||0},
+              {name: '天津市',value: paramDict['天津']||0},
+              {name: '上海市',value: paramDict['上海']||0},
+              {name: '重庆市',value: paramDict['重庆']||0},
+              {name: '河北省',value:paramDict['石家庄'] + paramDict['保定']||0},
+              {name: '河南省',value: paramDict['郑州']+ paramDict['洛阳']||0},
+              {name: '云南省',value: paramDict['昆明']||0},
+              //{name: '辽宁省',value: 0},
+             {name: '黑龙江省',value:paramDict['哈尔滨']||0},
+              {name: '湖南省',value: paramDict['长沙']},
+              {name: '安徽省',value:paramDict['合肥']||0},
+              {name: '山东省',value: paramDict['青岛']+ paramDict['济南']},
+              //{name: '新疆维吾尔自治区',value:0},
+              {name: '江苏省',value: paramDict['苏州']},
+              {name: '浙江省',value: paramDict['杭州'] + paramDict['宁波']||0},
+              {name: '江西省',value: paramDict['南昌']||0},
+              {name: '湖北省',value: paramDict['武汉']},
+              //{name: '广西壮族自治区',value: 0},
+              //{name: '甘肃省',value: paramDict['兰州']},
+              //{name: '山西省',value:0},
+              //{name: '内蒙古自治区',value:0},
+              {name: '陕西省',value: paramDict['西安']},
+              //{name: '吉林省',value: 0},
+              {name: '福建省',value: paramDict['厦门'] + paramDict['福州']||0  },
+              //{name: '贵州省',value: 0},
+              {name: '广东省',value: paramDict['广州']+ paramDict['深圳']},
+
+              //{name: '青海省',value:0},
+              //{name: '西藏自治区',value: 0},
+              {name: '四川省',value: paramDict['成都']},
+              //{name: '宁夏回族自治区',value: 0},
+              //{name: '海南省',value: 0},
+              //{name: '台湾省',value: 0},
+              //{name: '香港特别行政区',value: 0},
+              //{name: '澳门特别行政区',value: 0}
+            ]
+
+            myChart.showLoading();
+            $.getJSON('/static/JS/china.json', function (geoJson) {
+              myChart.hideLoading();
+              echarts.registerMap('china', geoJson);
+              {#echarts.registerMap('cityData', cityData, {#}
+              {#'北京市': '北京',  // 城市名称与省份名称的关联#}
+              {#'上海市': '上海',#}
+              {# '天津市':'天津'#}
+              {#'湖北省':'武汉',#}
+              {# '重庆市':'重庆',#}
+              {#  '河南省':'郑州',#}
+              {#  '广东省':'广州',#}
+              {#  '广东省':'深圳',#}
+              {#  '陕西省':'西安',#}
+              {#  '福建省':'厦门',#}
+              {#  '湖南省':'长沙',#}
+              {#  '江苏省':'苏州',#}
+              {#  '浙江省':'杭州',#}
+              {#  '四川省':'成都',#}
+              {##}
+              {#// 其他城市的关联关系...#}
+              {#  });#}
+              option = {
+                title: {
+                  text: '地区分布',
+                  left: 'left'
+                },
+                tooltip: {
+                  trigger: 'item',
+                  showDelay: 0,
+                  transitionDuration: 0.2
+                },
+                visualMap: {
+                  left: 'right',
+                  min: 0,
+                  max: 50,
+                  inRange: {
+                    color: [
+                      '#313695',
+                      '#4575b4',
+                      '#74add1',
+                      '#abd9e9',
+                      '#e0f3f8',
+                      '#ffffbf',
+                      '#fee090',
+                      '#fdae61',
+                      '#f46d43',
+                      '#d73027',
+                      '#a50026'
+                    ]
+                  },
+                  text: ['High', 'Low'],
+                  calculable: true
+                },
+                toolbox: {
+                  show: true,
+                  //orient: 'vertical',
+                  left: 'left',
+                  top: 'top',
+                  feature: {
+                    dataView: { readOnly: false },
+                    restore: {},
+                    saveAsImage: {}
+                  }
+                },
+                 series: [
+              {
+                name: '地区分布',
+               /*  id: 'population', */
+                type: 'map',
+                roam: true,
+                mapType: 'china',
+                animationDurationUpdate: 1000,
+                universalTransition: true,
+                data:data,
+                emphasis: {
+                  label: {
+                    show: true,
+                    fontSize: 30,
+                    color:'black'
+                  }
+                },
+              }],
+
+              }
+              myChart.setOption(option);
+            });
+
+            option && myChart.setOption(option);
+        </script>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+
+
+.q_charts{
+    width: 100%;
+    height: 80vh;
+    display: flex;
+}
+
+.q_charts .q_left{
+    width: 70%;
+    height: 100%;
+}
+
+.max{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color:aliceblue;
+    font-size: 30px;
+    color: #1e90f3;
+    border-radius: 10px;
+    width: 180px;
+    height: 100px;
+    text-align: center;
+}
+
+.max span{
+    color: #19364d;
+}

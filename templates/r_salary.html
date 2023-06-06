@@ -1,0 +1,58 @@
+{% extends "base_r.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/nav.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/quality.css') }}">
+    <script src="{{ url_for('static', filename='JS/echarts.min.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="navigation">
+        <div class="back" ><a href="{{ url_for('result.main') }}"><img src="{{ url_for('static', filename='back.png') }}"></a></div>
+            <ul >
+                <li><a href="{{url_for ('result.videos', search= search_w ) }}" >视频教程</a></li>
+                <li><a href="{{url_for ('result.charts', show='quality' ,search = search_w) }}">学历要求</a></li>
+                <li><a href="{{url_for ('result.charts', show= 'salary', search = search_w)}}">薪资水平</a></li>
+                <li><a href="{{url_for ('result.charts', show='area', search = search_w) }}">地区分布</a></li>
+            </ul>
+    </div>
+    <div class="r_title">{{ search_w }}</div>
+    <div class="q_charts">
+        <div id="main" style="width: 800px;height:600px;"></div>
+        <div class="max">最高薪资<span>{{ max }}</span></div>
+        <script type="text/javascript">
+        var paramDict = JSON.parse('{{ dict | tojson }}');
+        var chartDom = document.getElementById('main');
+        var myChart = echarts.init(chartDom);
+        var option;
+
+        option = {
+          xAxis: {
+            type: 'category',
+            data: ['0-10K', '10-20K', '20-30K', '30-40K', '40K以上']
+          },
+          yAxis: {
+            type: 'value'
+          },
+          series: [
+            {
+              data: [paramDict["0-10K"], paramDict["10-20K"], paramDict["20-30K"], paramDict["30-40K"], paramDict["40K以上"]],
+              type: 'bar',
+             label: {
+                fontSize: 18,
+                color: '#235894'
+              },
+              showBackground: true,
+              backgroundStyle: {
+                color: 'rgba(180, 180, 180, 0.2)'
+              }
+            }
+          ]
+        };
+
+        option && myChart.setOption(option);
+        </script>
+    </div>
+</div>
+{% endblock %}

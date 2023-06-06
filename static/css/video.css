@@ -1,0 +1,70 @@
+.container .video_list{
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-gap: 40px;
+}
+
+.video_list .item{
+    background-color: #f3faff;
+    width: 100%;
+    height: 280px;
+    margin-bottom: 30px;
+    border-radius: 20px;
+}
+
+.item .v_box{
+    width: 90%;
+    margin: 0 auto;
+    height: 150px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.v_box .cover{
+    width: 250px;
+    height: 130px;
+    border-radius: 10px;
+    box-shadow:  0px 2px 5px 2px #cdcdce;
+}
+.video_list .item .cover img{
+    width: 100%;
+    height: 100%;
+}
+.v_box .cover img:hover{
+    width: 120%;
+    height: 120%;
+    overflow: hidden;
+}
+
+.v_box .video{
+    width: 250px;
+    height: 100%;
+
+}
+.v_box .video .v_title{
+    cursor: pointer;
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    flex-wrap: wrap;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.item .skill_name{
+    margin-bottom: 20px;
+    width: 80%;
+    padding-left: 20px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 30px;
+    font-weight: 400;
+    color: #0a72c4;
+    font-family: 'Consolas', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+}
